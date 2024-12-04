@@ -1,5 +1,5 @@
 directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
-word = "SAMAS"
+word = "MAS"
 
 def search_position(board, i, j, direction, height, width, word):
     i_direction, j_direction = directions[direction]
