@@ -16,12 +16,12 @@ def check_data(data, rules):
 line = file.readline()
 while line != "\n":
     numbers = [int(x) for x in line.split('|')]
-    rules[numbers[0]].append(numbers[1])
+    rules[numbers[1]].append(numbers[0]) # Reverse rules
     line = file.readline()
 
 s = 0
 for line in file.readlines():
-    data = [int(x) for x in line.split(",")]
+    data = [int(x) for x in line.split(",")][::-1]
     s += check_data(data, rules)
 
 print(s)
