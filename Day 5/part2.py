@@ -3,25 +3,36 @@ rules = defaultdict(list)
 
 file = open("input.txt", "r")
 
-def check_data(data, rules):
-    checked = []
+def rebuild_data(data, rules):
+    new_data = list(data)
+
+    # Bit of a hack : Assume every list has an exact order where no elements can be placed freely
     for element in data:
-        for comparaison in rules[element]:
-            if comparaison in checked :
-                return 0
-        checked.append(element)
+        score = 0
+        for constraint in rules[element]:
+            if constraint in data:
+                score += 1
+        new_data[score] = element
     
-    return data[len(data) // 2]
+    return new_data[len(data) // 2]
+
+def check_data(data, rules):
+    for i in range(len(data)):
+        for comparaison in rules[data[i]]:
+            if comparaison in data[:i] :
+                return rebuild_data(data, rules)
+    
+    return 0
 
 line = file.readline()
 while line != "\n":
-    numbers = [int(x) for x in line.split('|')]
-    rules[numbers[1]].append(numbers[0]) # Reverse rules
+    rule = [int(x) for x in line.split('|')]
+    rules[rule[0]].append(rule[1])
     line = file.readline()
 
 s = 0
 for line in file.readlines():
-    data = [int(x) for x in line.split(",")][::-1]
+    data = [int(x) for x in line.split(",")]
     s += check_data(data, rules)
 
 print(s)
