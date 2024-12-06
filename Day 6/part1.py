@@ -11,8 +11,8 @@ def find_startpos(board):
             
 def count_crosses(board):
     s = 0
-    for i, row in enumerate(board):
-        for j, value in enumerate(row):
+    for row in board:
+        for value in row:
             if value == "X":
                 s += 1
     return s
