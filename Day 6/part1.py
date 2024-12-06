@@ -19,11 +19,11 @@ def count_crosses(board):
 
 def path(board, start):
     i, j = start
-    direction_counter = 0
+    direction = 0
     board[i][j] = "X"
 
     while True:
-        i_dir, j_dir = DIRECTIONS[direction_counter % 4]
+        i_dir, j_dir = DIRECTIONS[direction % 4]
         i += i_dir
         j += j_dir
 
@@ -31,7 +31,7 @@ def path(board, start):
             return board
 
         elif board[i][j] == "#":
-            direction_counter += 1
+            direction += 1
             i -= i_dir
             j -= j_dir
 
