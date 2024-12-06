@@ -43,3 +43,5 @@ for line in new_board :
     print(''.join(line))
 
 print(count_crosses(new_board))
+
+# O(n)
