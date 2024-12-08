@@ -37,8 +37,4 @@ def count_antinodes(city):
     return s
 
 apply_antinodes(city, nodes)
-
-for line in city:
-    print(''.join(line))
-
 print(count_antinodes(city))
