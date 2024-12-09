@@ -30,7 +30,7 @@ def remap(map):
         start_pointer = update_start_pointer(start_pointer)
         end_pointer = update_end_pointer(end_pointer)
 
-def checksum():
+def checksum(map):
     s = 0
     i = 0
     while map[i] != ".":
@@ -39,4 +39,4 @@ def checksum():
     return s
 
 remap(map)
-print(checksum())
+print(checksum(map))
