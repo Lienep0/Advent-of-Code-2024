@@ -7,13 +7,6 @@ for line in open("input.txt").readlines():
 length = len(mountain)
 width = len(mountain[0])
 
-def print_mountain(mountain):
-    for line in mountain:
-        for x in line:
-            print(x, end = '')
-        print("")
-    print("")
-
 def count_trailheads(mountain, i, j, height, marked):
     if height == 9 : 
         return 1
