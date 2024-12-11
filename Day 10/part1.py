@@ -39,5 +39,4 @@ for i, line in enumerate(mountain):
             marked = [[False for _ in range(width)] for _ in range(length)]
             s += count_trailheads(mountain, i, j, height, marked)
 
-print_mountain(mountain)
 print(s)
