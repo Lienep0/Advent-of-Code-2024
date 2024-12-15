@@ -82,7 +82,7 @@ top = time.perf_counter()
 
 start = find_startpos(board)
 visited = explore(board, start)
-print(f"{check_for_loops(board, visited, start)}) ways to stop the guard")
+print(f"{check_for_loops(board, visited, start)} ways to stop the guard")
 
 bottom = time.perf_counter()
 
