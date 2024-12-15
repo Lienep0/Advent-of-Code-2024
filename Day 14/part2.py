@@ -15,29 +15,20 @@ class Robot():
         self.x = (self.x + self.vx) % height
         self.y = (self.y + self.vy) % width
 
+    def get_coordinates(self):
+        return (self.x, self.y)
+
 robots = set()
 
 for line in open("input.txt").readlines():
     robots.add(Robot(*(int(x) for x in re.findall(r'(-?\d+)', line))))
 
 for i in range(1, 7688):
-    for robot in robots:
-        robot.move()
-
-    filepath = f"Robots/image_{i}.png"
-
-    board = [[0 for _ in range(width)] for _ in range(height)]
-
-    for robot in robots:
-        board[robot.x][robot.y] += 1
-
     img = Image.new("RGB", (width, height))
 
-    for i in range(height):
-        for j in range(width):
-            if board[i][j] > 0:
-                img.putpixel((j, i), (255, 255, 255))
-            else:
-                img.putpixel((j, i), (0, 0, 0))
+    for robot in robots:
+        robot.move()
+        k, l = robot.get_coordinates()
+        img.putpixel((l, k), (255, 255, 255))
 
-    img.save(filepath)
+    img.save(f"Robots/image_{i}.png")
