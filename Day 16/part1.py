@@ -37,5 +37,4 @@ while len(heap) > 0:
                         elif bestscores[new_i][new_j][k] > score + 1001:
                             hp.heappush(heap, (score + 1001, new_i, new_j, k))
 
-ei, ej = endpos
 print(bestendscore)
