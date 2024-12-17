@@ -5,56 +5,57 @@ with open("input.txt", "r") as file:
     next(file)
     instructions = [int(x) for x in re.search(r' .*', next(file)).group().strip().split(",")]
 
-print(f"A = {A}, B = {B}, C = {C}")
-P = 0
-output = []
+def run(a, b, c):
+    P = 0
+    output = []
 
-def combo(c):
-    if c < 4: return c
-    return [A, B, C][c - 4]
+    def combo(l):
+        nonlocal a, b, c
+        if l < 4: return l
+        return [a, b, c][l - 4]
 
-def adv(c): # 0
-    global A
-    A = A // (2 ** combo(c))
+    def adv(l): # 0
+        nonlocal a
+        a = a // (2 ** combo(l))
 
-def bxl(l): # 1
-    global B
-    B = B ^ l
+    def bxl(l): # 1
+        nonlocal b
+        b = b ^ l
 
-def bst(c): # 2
-    global B
-    B = combo(c) % 8
+    def bst(l): # 2$
+        nonlocal b
+        b = combo(l) % 8
 
-def jnz(l): # 3
-    if A != 0:
-        global P
-        P = l - 2
+    def jnz(l): # 3
+        nonlocal a, P
+        if a != 0:
+            P = l - 2
 
-def bxc(_): # 4
-    global B
-    B = B ^ C
+    def bxc(_): # 4
+        nonlocal b, c
+        b = b ^ c
 
-def out(c): # 5
-    output.append(combo(c) % 8)
+    def out(l): # 5
+        nonlocal output
+        output.append(combo(l) % 8)
 
-def bdv(c): # 6
-    global B
-    B = A // (2 ** combo(c))
+    def bdv(l): # 6
+        nonlocal a, b
+        b = a // (2 ** combo(l))
 
-def cdv(c): # 7
-    global C
-    C = A // (2 ** combo(c))
+    def cdv(l): # 7
+        nonlocal a, c
+        c = a // (2 ** combo(l))
 
-functions = [adv, bxl, bst, jnz, bxc, out, bdv, cdv]
+    functions = [adv, bxl, bst, jnz, bxc, out, bdv, cdv]
 
-while True:
-    if P >= len(instructions) - 1:
-        break
+    while True:
+        if P >= len(instructions) - 1:
+            break
 
-    functions[instructions[P]](instructions[P + 1])
-    P += 2
+        functions[instructions[P]](instructions[P + 1])
+        P += 2
 
-print(f"A = {A}, B = {B}, C = {C}")
-print(instructions)
+    return output
 
-print(','.join(str(i) for i in output))
+print(run(0, 0, 0))
