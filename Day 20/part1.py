@@ -2,15 +2,13 @@ import sys
 
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)] # Up, Right, Down, Left
 
-race, startfound, endfound, startpos, endpos = [], False, False, (-1, -1), (-1, -1)
+race, found, startpos = [], False, (-1, -1)
 with open("input.txt", "r") as file:
     for i, line in enumerate(file):
         line = line.strip()
         for j, char in enumerate(line):
-            if not startfound and char == "S":
-                startfound, startpos = True, (i, j)
-            if not endfound and char == "E":
-                endfound, endpos = True, (i, j)
+            if not found and char == "S":
+                found, startpos = True, (i, j)
         race.append(line)
 
 height = len(race)
@@ -23,7 +21,7 @@ cheats = []
 def build_data(x, y, score, dir):
     grid_scores[x][y] = score
 
-    if (x, y) != endpos:
+    if race[x][y] != "E":
         for direction in DIRECTIONS:
             dir_x, dir_y = direction
             new_x, new_y = x + dir_x * 2, y + dir_y * 2
@@ -45,6 +43,6 @@ def build_data(x, y, score, dir):
                         pass
                     case _:
                         return build_data(new_x, new_y, score + 1, (k + 2) % 4)
-build_data(*startpos, 0, -1)
 
+build_data(*startpos, 0, -1)
 print(sum([1 for score in [grid_scores[new_x][new_y] - score - 2 for score, new_x, new_y in cheats] if score >= 100]))
