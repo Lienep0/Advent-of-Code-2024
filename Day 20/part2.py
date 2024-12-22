@@ -18,14 +18,14 @@ sys.setrecursionlimit(height * width)
 grid_scores = [[0 for _ in line] for line in race]
 
 max_distance = 20
-path = {(x, y, abs(x) + abs(y)) for x in range(-max_distance, max_distance + 1) for y in range(-max_distance, max_distance + 1) if abs(x) + abs(y) <= max_distance}
+cheatable_relative_nodes = {(x, y, abs(x) + abs(y)) for x in range(-max_distance, max_distance + 1) for y in range(-max_distance, max_distance + 1) if abs(x) + abs(y) <= max_distance}
 cheats = []
 
 def build_data(x, y, score, dir):
     grid_scores[x][y] = score
 
     if race[x][y] != "E":
-        for i, j, dist in path:
+        for i, j, dist in cheatable_relative_nodes:
             new_x, new_y = x + i, y + j
             if not (new_x < 0 or new_x >= height or new_y < 0 or new_y >= width) and race[new_x][new_y] != "#":
                 cheats.append((score, new_x, new_y, dist))
