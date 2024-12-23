@@ -1,10 +1,3 @@
-import re
-
-with open("input.txt", "r") as file:
-    A, B, C = map(int, (re.search(r'\d+', line).group() for line in [next(file) for _ in range(3)]))
-    next(file)
-    instructions = [int(x) for x in re.search(r' .*', next(file)).group().strip().split(",")]
-
 def run(a, b, c):
     P = 0
     output = []
@@ -22,7 +15,7 @@ def run(a, b, c):
         nonlocal b
         b = b ^ l
 
-    def bst(l): # 2$
+    def bst(l): # 2
         nonlocal b
         b = combo(l) % 8
 
@@ -58,4 +51,12 @@ def run(a, b, c):
 
     return output
 
-print(run(0, 0, 0))
+if __name__ == "__main__":
+    import re
+    
+    with open("input.txt", "r") as file:
+        A, B, C = map(int, (re.search(r'\d+', line).group() for line in [next(file) for _ in range(3)]))
+        next(file)
+        instructions = [int(x) for x in re.search(r' .*', next(file)).group().strip().split(",")]
+
+    print(run(A,B,C))

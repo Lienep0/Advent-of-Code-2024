@@ -1,40 +1,35 @@
-from part1 import run
+def bin3_to_int(string):
+    c = 0
+    bits = reversed([string[x:x+3] for x in range(0, len(string), 3)])
 
-goal = [0,3,5,4,3,0]
-goal_lenght = len(goal)
+    for i, bit in enumerate(bits):
+        c += int(bit, 2) * (8 ** i)
+    return c
 
-a = 1
-bestcount = 0
+goal = [1, 7, 2, 6, 4, 6, 2, 5, 3, 0, 7, 1, 6, 6, 0, 3] # (prog ^ 3 since 5^6 = 3)
+base_8 = [format(i, '03b') for i in range(8)]
 
-while True:
-    output = run(a, 0, 0)
+# We build A 3 bits at a time starting from the most significant since they reprensent the code's last digit
+A = (["0"] * 9) + ["0" for _ in range(len(goal) * 3)]
 
-    count = 0
-    for x, y in zip(output, goal):
-        if x == y:
-            count += 1
-        else:
-            break
+# Rlly need to build A from the 3 leftmost digits and then bitshift 3 <<
+def backtrack(A, i):
+    if i < 0:
+        print("Found")
+        return A
     
-    if count == goal_lenght and len(output) == len(goal):
-        print(output, a)
-        break
-    elif count > bestcount:
-        print(count, a)
-        bestcount = count
-        a *= 3
-    else:
-        a += 1
+    bit_goal = base_8[goal[i]]
+    print(''.join(A))
+    for bit in base_8: # 3 leftmost bits of A (excluding shift buffer)
+        a = bin3_to_int(bit)
+        A_index = 9 + (len(goal) - i - 1) * 3
+        A_index_shift = a ^ 5
+        bit_output = base_8[(a ^ (bin3_to_int(''.join(A[A_index - A_index_shift - 3 : A_index])))) % 8]
+        if bit_output == bit_goal:
+            end = backtrack(A[:9 + A_index] + [x for x in bit_goal] + A[9 + A_index + 3:], i - 1)
+            if end != None:
+                return end
+            
+    return None
 
-def compare(output):
-    for i in range(len(output)):
-        if output[i] != goal[i]:
-            return i
-    return True # Found a
-
-def reca(curr_a, decision):
-    for i in range(decision, 8):
-
-    return compare(run(curr_a, )) 
-
-# Need to backtrack on A using the fact that it's a base 8 number that gets divided by 3 each loop
+print(backtrack(A, len(goal) - 1))
