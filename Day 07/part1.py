@@ -6,6 +6,8 @@ for line in open("input.txt").readlines():
     equations.append((int(equation[0]), [int(x) for x in equation[1]]))
 
 def solve_equation(value, subvalues, current, depth, maxdepth):
+    if current > value:
+        return False
     operand = subvalues[depth]
 
     new_plus = current + operand
